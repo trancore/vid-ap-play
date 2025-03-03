@@ -1,8 +1,16 @@
 import './assets/css/global.css'
-import './assets/css/reset.css'
+import Layout from '~/components/Common/Layout/Layout'
+import ContentTab from '~/components/Ui/Tab/ContentTab'
+import ToggleTab from '~/components/Ui/Tab/ToggleTab'
 
 function App() {
-  return <main className="container"></main>
+  return (
+    <Layout>
+      <ToggleTab>
+        <ContentTab></ContentTab>
+      </ToggleTab>
+    </Layout>
+  )
 }
 
 export default App
