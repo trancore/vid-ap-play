@@ -1,20 +1,24 @@
 ﻿import { Tab, TabGroup, TabList, TabPanels } from '@headlessui/react'
 import { ReactNode } from 'react'
-import useTab from '~/hooks/useTab'
+import { ITab } from '~/types/Tab'
 
 interface Props {
   children: ReactNode
+  tabs: ITab[]
+  onClickPlusTab: () => void
 }
 
-export default function ToggleTab({ children }: Props): JSX.Element {
-  const { tabs: currentTabs } = useTab()
-
+export default function ToggleTab({
+  children,
+  tabs,
+  onClickPlusTab,
+}: Props): JSX.Element {
   return (
     <TabGroup>
       <TabList className="sticky top-[116px] flex overflow-x-scroll pb-10">
-        {currentTabs === undefined ||
-          (currentTabs.length > 0 &&
-            currentTabs.map((tab, index) => (
+        {tabs === undefined ||
+          (tabs.length > 0 &&
+            tabs.map((tab, index) => (
               <Tab
                 key={`tab-${index}`}
                 className="w-60 cursor-pointer overflow-hidden border border-gray-500 p-4 text-ellipsis text-orange-700"
@@ -22,7 +26,10 @@ export default function ToggleTab({ children }: Props): JSX.Element {
                 {tab.path}
               </Tab>
             )))}
-        <Tab className="min-w-60 cursor-pointer border-b border-gray-500 p-4 text-ellipsis">
+        <Tab
+          className="min-w-60 cursor-pointer border-b border-gray-500 p-4 text-ellipsis"
+          onClick={onClickPlusTab}
+        >
           +
         </Tab>
       </TabList>

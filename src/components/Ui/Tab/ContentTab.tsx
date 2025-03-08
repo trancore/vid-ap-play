@@ -1,8 +1,15 @@
-﻿import useDirectory from '~/hooks/useDirectory'
-import Button from '~/components/Common/Button/Button'
+﻿import Button from '~/components/Common/Button/Button'
 import VideoCard from '~/components/Ui/Card/VideoCard'
 
-export default function ContentTab(): JSX.Element {
+interface Props {
+  directoryPath: string
+  selectDirectory: () => Promise<void>
+}
+
+export default function ContentTab({
+  directoryPath,
+  selectDirectory,
+}: Props): JSX.Element {
   const dummy = Array.from({ length: 4 }, (_, i) => {
     return {
       src: '/src/assets/videos/dummy-video.mp4',
@@ -10,8 +17,6 @@ export default function ContentTab(): JSX.Element {
       duration: 3600,
     }
   })
-
-  const { directoryPath, selectDirectory } = useDirectory()
 
   return (
     <div className="flex flex-col gap-10">
