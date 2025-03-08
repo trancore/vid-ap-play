@@ -1,15 +1,10 @@
-﻿import Button from '~/components/Common/Button/Button'
-import VideoCard from '~/components/Ui/Card/VideoCard'
+﻿import VideoCard from '~/components/Ui/Card/VideoCard'
 
 interface Props {
   directoryPath: string
-  selectDirectory: () => Promise<void>
 }
 
-export default function ContentTab({
-  directoryPath,
-  selectDirectory,
-}: Props): JSX.Element {
+export default function ContentTab({ directoryPath }: Props): JSX.Element {
   const dummy = Array.from({ length: 4 }, (_, i) => {
     return {
       src: '/src/assets/videos/dummy-video.mp4',
@@ -20,15 +15,9 @@ export default function ContentTab({
 
   return (
     <div className="flex flex-col gap-10">
-      <div className="flex flex-col gap-3">
-        <Button
-          text="ディレクトリを指定する"
-          onClick={async () => await selectDirectory()}
-        />
-        <p>
-          {directoryPath ? directoryPath : 'ディレクトリが指定されていません。'}
-        </p>
-      </div>
+      <p>
+        {directoryPath ? directoryPath : 'ディレクトリが指定されていません。'}
+      </p>
       <div className="flex flex-wrap gap-x-3 gap-y-10">
         {dummy.map((dummy, index) => (
           <VideoCard

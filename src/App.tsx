@@ -1,4 +1,5 @@
 import './assets/css/global.css'
+import Button from '~/components/Common/Button/Button'
 import Layout from '~/components/Common/Layout/Layout'
 import ContentTab from '~/components/Ui/Tab/ContentTab'
 import ToggleTab from '~/components/Ui/Tab/ToggleTab'
@@ -11,6 +12,12 @@ function App() {
 
   return (
     <Layout>
+      <div className="my-5">
+        <Button
+          text="ディレクトリを指定する"
+          onClick={async () => await selectDirectory()}
+        />
+      </div>
       <ToggleTab
         tabs={tabs}
         onClickPlusTab={() =>
@@ -21,10 +28,7 @@ function App() {
           })
         }
       >
-        <ContentTab
-          directoryPath={directoryPath}
-          selectDirectory={selectDirectory}
-        />
+        <ContentTab directoryPath={directoryPath} />
       </ToggleTab>
     </Layout>
   )
