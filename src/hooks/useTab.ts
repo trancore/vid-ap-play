@@ -22,5 +22,5 @@ export default function useTab() {
     setTabs(currentTabs)
   }
 
-  return { tabs, setTabs, getTab }
+  return { tabs, getTab, addTab }
 }
