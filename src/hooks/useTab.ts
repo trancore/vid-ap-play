@@ -25,5 +25,15 @@ export default function useTab() {
     setTabs(currentTabs)
   }
 
-  return { tabs, getTab, addTab }
+  function activeTab(tabId: Pick<ITab, 'id'>['id']) {
+    const updatedTabs: ITab[] = structuredClone(tabs).map((tab) => ({
+      id: tab.id,
+      path: tab.path,
+      active: tabId === tab.id,
+    }))
+
+    setTabs(updatedTabs)
+  }
+
+  return { tabs, getTab, addTab, activeTab }
 }

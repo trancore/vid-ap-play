@@ -7,8 +7,18 @@ import useDirectory from '~/hooks/useDirectory'
 import useTab from '~/hooks/useTab'
 
 function App() {
-  const { tabs, addTab } = useTab()
+  const { tabs, addTab, activeTab } = useTab()
   const { directoryPath, selectDirectory } = useDirectory()
+
+  const onClickToggleTab = {
+    tab: activeTab,
+    plusTab: () =>
+      addTab({
+        id: tabs.length + 1,
+        path: directoryPath,
+        active: true,
+      }),
+  }
 
   return (
     <Layout>
@@ -18,16 +28,7 @@ function App() {
           onClick={async () => await selectDirectory()}
         />
       </div>
-      <ToggleTab
-        tabs={tabs}
-        onClickPlusTab={() =>
-          addTab({
-            id: tabs.length + 1,
-            path: directoryPath,
-            active: true,
-          })
-        }
-      >
+      <ToggleTab tabs={tabs} onClick={onClickToggleTab}>
         <ContentTab directoryPath={directoryPath} />
       </ToggleTab>
     </Layout>
