@@ -9,11 +9,14 @@ export default function useTab() {
   }
 
   function addTab(tab: ITab) {
-    // TODO: 既存にあるTabのactiveをfalseにする
-
     if (tab.path === '') return
+    if (tabs.find((currentTab) => currentTab.path === tab.path)) return
 
-    const currentTabs = structuredClone(tabs)
+    const currentTabs: ITab[] = structuredClone(tabs).map((tab) => ({
+      id: tab.id,
+      path: tab.path,
+      active: false,
+    }))
     currentTabs.push({
       id: currentTabs.length + 1,
       path: tab.path,
