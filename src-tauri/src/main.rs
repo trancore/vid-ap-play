@@ -2,5 +2,9 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 fn main() {
-    vid_ap_play_lib::run().plugin(tauri_plugin_store::Builder::new().build())
+    tauri::Builder::default()
+        .plugin(tauri_plugin_dialog::init())
+        .plugin(tauri_plugin_store::Builder::default().build())
+        .run(tauri::generate_context!())
+        .expect("error while running tauri application");
 }
