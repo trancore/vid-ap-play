@@ -6,8 +6,8 @@ export default function useDirectory() {
 
   const selectDirectory = async () => {
     const selectedDirectoryPath = await open({
-      directory: true, // ディレクトリ選択モード
-      multiple: false, // 複数選択を無効
+      directory: true,
+      multiple: false,
     })
 
     if (selectedDirectoryPath) {

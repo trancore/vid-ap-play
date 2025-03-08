@@ -1,5 +1,5 @@
-﻿import { Field } from '@headlessui/react'
-import TextForm from '~/components/Common/Form/File'
+﻿import useDirectory from '~/hooks/useDirectory'
+import Button from '~/components/Common/Button/Button'
 import VideoCard from '~/components/Ui/Card/VideoCard'
 
 export default function ContentTab(): JSX.Element {
@@ -10,11 +10,20 @@ export default function ContentTab(): JSX.Element {
       duration: 3600,
     }
   })
+
+  const { directoryPath, selectDirectory } = useDirectory()
+
   return (
     <div className="flex flex-col gap-10">
-      <Field>
-        <TextForm label="パス" />
-      </Field>
+      <div className="flex flex-col gap-3">
+        <Button
+          text="ディレクトリを指定する"
+          onClick={async () => await selectDirectory()}
+        />
+        <p>
+          {directoryPath ? directoryPath : 'ディレクトリが指定されていません。'}
+        </p>
+      </div>
       <div className="flex flex-wrap gap-x-3 gap-y-10">
         {dummy.map((dummy, index) => (
           <VideoCard
