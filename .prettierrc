@@ -9,5 +9,5 @@
   "printWidth": 80,
   "tabWidth": 2,
   "proseWrap": "never",
-  "importOrder": ["^[./]", "~/components", "~/hooks", "~/types"]
+  "importOrder": ["^[./]", "~/components", "~/hooks", "~/types", "~/utils"]
 }

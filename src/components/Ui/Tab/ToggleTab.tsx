@@ -1,5 +1,6 @@
 ﻿import { Tab, TabGroup, TabList, TabPanels } from '@headlessui/react'
 import { ReactNode } from 'react'
+import { getLastTextSegment } from '~/utils/format'
 import { ITab } from '~/types/Tab'
 
 interface Props {
@@ -23,7 +24,7 @@ export default function ToggleTab({
                 key={`tab-${index}`}
                 className="w-60 cursor-pointer overflow-hidden border border-gray-500 p-4 text-ellipsis text-orange-700"
               >
-                {tab.path}
+                {getLastTextSegment(tab.path, '/')}
               </Tab>
             )))}
         <Tab
