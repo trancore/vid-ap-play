@@ -1,28 +1,18 @@
 ﻿import { useState } from 'react'
-
-interface Tab {
-  id: number
-  path: string
-  active: boolean
-}
+import { ITab } from '~/type/Tab'
 
 export default function useTab() {
-  const [tabs, setTabs] = useState<Tab[]>()
+  const [tabs, setTabs] = useState<ITab[]>([])
 
-  function getTab(id: number): Tab | undefined {
+  function getTab(id: number): ITab | undefined {
     return tabs?.find((tab) => tab.id === id)
   }
 
-  function setTab(tab: Tab) {
-    if (tabs === undefined) return
+  function addTab(tab: ITab) {
     const currentTabs = structuredClone(tabs)
-    currentTabs.push({
-      id: currentTabs.length + 1,
-      path: tab.path,
-      active: tab.active,
-    })
+    currentTabs.push(tab)
     setTabs(currentTabs)
   }
 
-  return { tabs, setTabs, getTab, setTab }
+  return { tabs, getTab, addTab }
 }
