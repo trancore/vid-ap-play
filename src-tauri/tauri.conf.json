@@ -18,7 +18,9 @@
       }
     ],
     "security": {
-      "csp": null
+      "csp": {
+        "media-src": "asset: http://asset.localhost"
+      }
     }
   },
   "bundle": {
