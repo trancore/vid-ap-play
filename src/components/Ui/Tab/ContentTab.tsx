@@ -1,30 +1,65 @@
-﻿import { Field } from '@headlessui/react'
-import TextForm from '~/components/Common/Form/File'
+﻿import { convertFileSrc } from '@tauri-apps/api/core'
+import { readDir } from '@tauri-apps/plugin-fs'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import VideoCard from '~/components/Ui/Card/VideoCard'
+import { ITab } from '~/types/Tab'
 
-export default function ContentTab(): JSX.Element {
-  const dummy = Array.from({ length: 4 }, (_, i) => {
-    return {
-      src: '/src/assets/videos/dummy-video.mp4',
-      fileName: `${i}-filenamefilenamefilenamefilenamefilenamefilenamefilename`,
-      duration: 3600,
-    }
-  })
+interface IFile {
+  src: string
+  fileName: string
+  duration: number
+}
+interface Props {
+  tabs: ITab[]
+  directoryPath: string
+}
+
+export default function ContentTab({
+  tabs,
+  directoryPath,
+}: Props): JSX.Element {
+  const [files, setFiles] = useState<IFile[]>([])
+  const [currentDirectoryPath, setCurrentDirectoryPath] = useState('')
+
+  const fetchVideoFiles = useCallback(async () => {
+    const readFiles = await readDir(currentDirectoryPath)
+    const currentFiles = readFiles.map<IFile>((file) => ({
+      src: convertFileSrc(currentDirectoryPath + '/' + file.name),
+      fileName: file.name,
+      duration: 6000,
+    }))
+
+    setFiles(currentFiles)
+  }, [currentDirectoryPath])
+
+  const videoCards = useMemo(() => {
+    return files.map((file, index) => (
+      <VideoCard
+        key={`video-card-${index}`}
+        src={file.src}
+        fileName={file.fileName}
+        duration={file.duration}
+      />
+    ))
+  }, [files])
+
+  useEffect(() => {
+    const path = tabs.find((tab) => tab.active)?.path
+    setCurrentDirectoryPath(path === undefined ? directoryPath : path)
+    if (currentDirectoryPath === '') return
+    fetchVideoFiles()
+  }, [tabs, currentDirectoryPath, setCurrentDirectoryPath, fetchVideoFiles])
+
   return (
     <div className="flex flex-col gap-10">
-      <Field>
-        <TextForm label="パス" />
-      </Field>
-      <div className="flex flex-wrap gap-x-3 gap-y-10">
-        {dummy.map((dummy, index) => (
-          <VideoCard
-            key={`video-card-${index}`}
-            src={dummy.src}
-            fileName={dummy.fileName}
-            duration={dummy.duration}
-          />
-        ))}
-      </div>
+      <p>
+        {currentDirectoryPath
+          ? currentDirectoryPath
+          : 'ディレクトリが指定されていません。'}
+      </p>
+      {files.length > 0 && (
+        <div className="flex flex-wrap gap-x-3 gap-y-10">{videoCards}</div>
+      )}
     </div>
   )
 }
