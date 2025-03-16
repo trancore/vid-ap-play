@@ -1,10 +1,28 @@
-﻿import { useState } from 'react'
+﻿import { useCallback, useEffect, useState } from 'react'
+import useStores from '~/hooks/useStores'
 import { ITab } from '~/types/Tab'
 
 export default function useTab() {
+  const { getStores } = useStores()
   const [tabs, setTabs] = useState<ITab[]>([])
 
-  function getTab(id: number): ITab | undefined {
+  const fetchStore = useCallback(async () => {
+    const filesStore = await getStores('files')
+
+    setTabs(
+      filesStore?.map((file, index) => ({
+        id: file.id,
+        path: file.path,
+        active: index === 0 ? true : false,
+      })) || [],
+    )
+  }, [])
+
+  useEffect(() => {
+    fetchStore()
+  }, [fetchStore])
+
+  function getTab(id: string): ITab | undefined {
     return tabs?.find((tab) => tab.id === id)
   }
 
@@ -17,11 +35,7 @@ export default function useTab() {
       path: tab.path,
       active: false,
     }))
-    currentTabs.push({
-      id: currentTabs.length + 1,
-      path: tab.path,
-      active: tab.active,
-    })
+    currentTabs.push(tab)
     setTabs(currentTabs)
   }
 

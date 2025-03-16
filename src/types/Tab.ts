@@ -1,5 +1,5 @@
 ﻿export interface ITab {
-  id: number
+  id: string
   path: string
   active: boolean
 }
