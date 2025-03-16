@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid'
 import './assets/css/global.css'
 import Button from '~/components/Common/Button/Button'
 import Layout from '~/components/Common/Layout/Layout'
@@ -14,7 +15,7 @@ function App() {
     tab: activeTab,
     plusTab: () =>
       addTab({
-        id: tabs.length + 1,
+        id: uuidv4(),
         path: directoryPath,
         active: true,
       }),
@@ -29,7 +30,7 @@ function App() {
         />
       </div>
       <ToggleTab tabs={tabs} onClick={onClickToggleTab}>
-        <ContentTab directoryPath={directoryPath} />
+        <ContentTab tabs={tabs} directoryPath={directoryPath} />
       </ToggleTab>
     </Layout>
   )

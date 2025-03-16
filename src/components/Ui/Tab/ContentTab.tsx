@@ -2,6 +2,7 @@
 import { readDir } from '@tauri-apps/plugin-fs'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import VideoCard from '~/components/Ui/Card/VideoCard'
+import { ITab } from '~/types/Tab'
 
 interface IFile {
   src: string
@@ -9,22 +10,27 @@ interface IFile {
   duration: number
 }
 interface Props {
+  tabs: ITab[]
   directoryPath: string
 }
 
-export default function ContentTab({ directoryPath }: Props): JSX.Element {
+export default function ContentTab({
+  tabs,
+  directoryPath,
+}: Props): JSX.Element {
   const [files, setFiles] = useState<IFile[]>([])
+  const [currentDirectoryPath, setCurrentDirectoryPath] = useState('')
 
   const fetchVideoFiles = useCallback(async () => {
-    const readFiles = await readDir(directoryPath)
+    const readFiles = await readDir(currentDirectoryPath)
     const currentFiles = readFiles.map<IFile>((file) => ({
-      src: convertFileSrc(directoryPath + '/' + file.name),
+      src: convertFileSrc(currentDirectoryPath + '/' + file.name),
       fileName: file.name,
       duration: 6000,
     }))
 
     setFiles(currentFiles)
-  }, [directoryPath])
+  }, [currentDirectoryPath])
 
   const videoCards = useMemo(() => {
     return files.map((file, index) => (
@@ -38,14 +44,18 @@ export default function ContentTab({ directoryPath }: Props): JSX.Element {
   }, [files])
 
   useEffect(() => {
-    if (directoryPath === '') return
+    const path = tabs.find((tab) => tab.active)?.path
+    setCurrentDirectoryPath(path === undefined ? directoryPath : path)
+    if (currentDirectoryPath === '') return
     fetchVideoFiles()
-  }, [directoryPath, fetchVideoFiles])
+  }, [tabs, currentDirectoryPath, setCurrentDirectoryPath, fetchVideoFiles])
 
   return (
     <div className="flex flex-col gap-10">
       <p>
-        {directoryPath ? directoryPath : 'ディレクトリが指定されていません。'}
+        {currentDirectoryPath
+          ? currentDirectoryPath
+          : 'ディレクトリが指定されていません。'}
       </p>
       {files.length > 0 && (
         <div className="flex flex-wrap gap-x-3 gap-y-10">{videoCards}</div>
