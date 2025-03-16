@@ -9,6 +9,21 @@
     "store:default",
     "dialog:allow-open",
     "fs:default",
-    "fs:allow-read-dir"
+    {
+      "identifier": "fs:allow-read-dir",
+      "allow": [
+        {
+          "path": "**"
+        }
+      ]
+    },
+    {
+      "identifier": "fs:allow-read-file",
+      "allow": [
+        {
+          "path": "**"
+        }
+      ]
+    }
   ]
 }
