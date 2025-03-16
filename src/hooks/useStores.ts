@@ -12,7 +12,7 @@ const stores = await load('stores.json', { autoSave: true })
 await stores.set('files', [
   {
     id: '1111111111',
-    path: '§',
+    path: '$',
   },
 ])
 
@@ -21,7 +21,8 @@ export default function useStores() {
     return await stores.get<IStore[typeof key]>(key)
   }
 
-  async function saveStores() {
+  async function saveStores(key: keyof IStore, data: IStore[typeof key]) {
+    await stores.set(key, data)
     await stores.save()
   }
 

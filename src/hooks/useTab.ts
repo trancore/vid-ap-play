@@ -3,7 +3,7 @@ import useStores from '~/hooks/useStores'
 import { ITab } from '~/types/Tab'
 
 export default function useTab() {
-  const { getStores } = useStores()
+  const { getStores, saveStores } = useStores()
   const [tabs, setTabs] = useState<ITab[]>([])
 
   const fetchStore = useCallback(async () => {
@@ -37,6 +37,7 @@ export default function useTab() {
     }))
     currentTabs.push(tab)
     setTabs(currentTabs)
+    saveStores('files', currentTabs)
   }
 
   function activeTab(tabId: Pick<ITab, 'id'>['id']) {
