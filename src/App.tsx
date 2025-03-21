@@ -8,7 +8,7 @@ import useDirectory from '~/hooks/useDirectory'
 import useTab from '~/hooks/useTab'
 
 function App() {
-  const { tabs, addTab, activeTab } = useTab()
+  const { tabs, addTab, activeTab, deleteTab } = useTab()
   const { directoryPath, selectDirectory } = useDirectory()
 
   const onClickToggleTab = {
@@ -30,7 +30,11 @@ function App() {
         />
       </div>
       <ToggleTab tabs={tabs} onClick={onClickToggleTab}>
-        <ContentTab tabs={tabs} directoryPath={directoryPath} />
+        <ContentTab
+          tabs={tabs}
+          directoryPath={directoryPath}
+          onClickDeleteButton={deleteTab}
+        />
       </ToggleTab>
     </Layout>
   )

@@ -50,5 +50,14 @@ export default function useTab() {
     setTabs(updatedTabs)
   }
 
-  return { tabs, getTab, addTab, activeTab }
+  function deleteTab(tabId: Pick<ITab, 'id'>['id']) {
+    const updatedTabs: ITab[] = structuredClone(tabs).filter(
+      (tab) => tab.id !== tabId,
+    )
+
+    setTabs(updatedTabs)
+    saveStores('files', updatedTabs)
+  }
+
+  return { tabs, getTab, addTab, activeTab, deleteTab }
 }
