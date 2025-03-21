@@ -6,6 +6,8 @@ import VideoCard from '~/components/Ui/Card/VideoCard'
 import { ITab } from '~/types/Tab'
 import { IFile } from '~/types/file'
 
+const VIDEO_EXTENSIONS = ['.mp4']
+
 interface Props {
   tabs: ITab[]
   onClickDeleteButton: (tabId: Pick<ITab, 'id'>['id']) => void
@@ -22,13 +24,28 @@ export default function ContentTab({
     if (!currentTab?.path || !currentTab?.active) return
 
     const readFiles = await readDir(currentTab.path)
-    const currentFiles = readFiles.map<IFile>((file) => ({
-      src: convertFileSrc(currentTab.path + '/' + file.name),
-      fileName: file.name,
-      duration: 6000,
-    }))
+    const currentFiles = readFiles
+      .filter((file) => VIDEO_EXTENSIONS.some((ext) => file.name.endsWith(ext)))
+      .map<Promise<IFile>>(async (file) => {
+        const src = convertFileSrc(currentTab.path + '/' + file.name)
+        const videoElement = document.createElement('video')
+        videoElement.src = src
+        const duration = await new Promise<number>((resolve) => {
+          videoElement.addEventListener('loadedmetadata', () => {
+            resolve(videoElement.duration)
+          })
+        })
 
-    setFiles(currentFiles)
+        console.log('🚀 ~ fetchVideoFiles ~ duration:', duration)
+
+        return {
+          src: src,
+          fileName: file.name,
+          duration: duration,
+        }
+      })
+
+    setFiles(await Promise.all(currentFiles))
   }, [currentTab, setFiles])
 
   const videoCards = useMemo(() => {

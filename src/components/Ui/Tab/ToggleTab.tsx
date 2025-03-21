@@ -1,7 +1,7 @@
 ﻿import { Tab, TabGroup, TabList, TabPanels } from '@headlessui/react'
 import { ReactNode } from 'react'
 import { ITab } from '~/types/Tab'
-import { getLastTextSegment } from '~/utils/format'
+import { getLastTextSegment } from '~/utils/string'
 
 interface Props {
   children: ReactNode
