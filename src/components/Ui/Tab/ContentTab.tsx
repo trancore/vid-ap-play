@@ -36,8 +36,6 @@ export default function ContentTab({
           })
         })
 
-        console.log('🚀 ~ fetchVideoFiles ~ duration:', duration)
-
         return {
           src: src,
           fileName: file.name,
@@ -45,7 +43,8 @@ export default function ContentTab({
         }
       })
 
-    setFiles(await Promise.all(currentFiles))
+    const resolvedFiles = await Promise.all(currentFiles)
+    setFiles(resolvedFiles)
   }, [currentTab, setFiles])
 
   const videoCards = useMemo(() => {
