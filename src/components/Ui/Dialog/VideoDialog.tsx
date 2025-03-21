@@ -58,6 +58,8 @@ export default function VideoDialog({
     const videoElement = videoRef.current
     if (!videoElement) return
 
+    videoElement.volume = 0.5
+
     videoElement.addEventListener('ended', handleVideoEnded)
 
     return () => {
