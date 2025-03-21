@@ -30,11 +30,7 @@ function App() {
         />
       </div>
       <ToggleTab tabs={tabs} onClick={onClickToggleTab}>
-        <ContentTab
-          tabs={tabs}
-          directoryPath={directoryPath}
-          onClickDeleteButton={deleteTab}
-        />
+        <ContentTab tabs={tabs} onClickDeleteButton={deleteTab} />
       </ToggleTab>
     </Layout>
   )

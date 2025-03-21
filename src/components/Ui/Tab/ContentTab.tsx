@@ -12,20 +12,18 @@ interface IFile {
 }
 interface Props {
   tabs: ITab[]
-  directoryPath: string
   onClickDeleteButton: (tabId: Pick<ITab, 'id'>['id']) => void
 }
 
 export default function ContentTab({
   tabs,
-  directoryPath,
   onClickDeleteButton,
 }: Props): JSX.Element {
   const [files, setFiles] = useState<IFile[]>([])
   const [currentTab, setCurrentTab] = useState<ITab>()
 
   const fetchVideoFiles = useCallback(async () => {
-    if (!currentTab?.path) return
+    if (!currentTab?.path || !currentTab?.active) return
 
     const readFiles = await readDir(currentTab.path)
     const currentFiles = readFiles.map<IFile>((file) => ({
@@ -35,7 +33,7 @@ export default function ContentTab({
     }))
 
     setFiles(currentFiles)
-  }, [currentTab])
+  }, [currentTab, setFiles])
 
   const videoCards = useMemo(() => {
     return files.map((file, index) => (
@@ -49,13 +47,13 @@ export default function ContentTab({
   }, [files])
 
   useEffect(() => {
-    const tab = tabs.find((tab) => {
-      return tab.path === directoryPath
-    })
+    const tab = tabs.find((tab) => tab.active)
+
+    if (!tab) return
 
     setCurrentTab(tab)
     fetchVideoFiles()
-  }, [tabs, setCurrentTab, fetchVideoFiles])
+  }, [tabs, currentTab])
 
   return (
     <div className="flex flex-col gap-10">

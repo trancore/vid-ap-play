@@ -48,6 +48,7 @@ export default function useTab() {
     }))
 
     setTabs(updatedTabs)
+    saveStores('files', updatedTabs)
   }
 
   function deleteTab(tabId: Pick<ITab, 'id'>['id']) {
