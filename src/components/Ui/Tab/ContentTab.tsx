@@ -1,6 +1,7 @@
 ﻿import { convertFileSrc } from '@tauri-apps/api/core'
 import { readDir } from '@tauri-apps/plugin-fs'
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import Button from '~/components/Common/Button/Button'
 import VideoCard from '~/components/Ui/Card/VideoCard'
 import { ITab } from '~/types/Tab'
 
@@ -52,11 +53,14 @@ export default function ContentTab({
 
   return (
     <div className="flex flex-col gap-10">
-      <p>
-        {currentDirectoryPath
-          ? currentDirectoryPath
-          : 'ディレクトリが指定されていません。'}
-      </p>
+      <div className="flex items-center justify-start gap-10">
+        <p>
+          {currentDirectoryPath
+            ? currentDirectoryPath
+            : 'ディレクトリが指定されていません。'}
+        </p>
+        <Button text="削除" onClick={() => {}}></Button>
+      </div>
       {files.length > 0 && (
         <div className="flex flex-wrap gap-x-3 gap-y-10">{videoCards}</div>
       )}
