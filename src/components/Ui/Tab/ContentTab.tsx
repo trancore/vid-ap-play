@@ -4,12 +4,8 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import Button from '~/components/Common/Button/Button'
 import VideoCard from '~/components/Ui/Card/VideoCard'
 import { ITab } from '~/types/Tab'
+import { IFile } from '~/types/file'
 
-interface IFile {
-  src: string
-  fileName: string
-  duration: number
-}
 interface Props {
   tabs: ITab[]
   onClickDeleteButton: (tabId: Pick<ITab, 'id'>['id']) => void
@@ -36,12 +32,12 @@ export default function ContentTab({
   }, [currentTab, setFiles])
 
   const videoCards = useMemo(() => {
-    return files.map((file, index) => (
+    return files.map((file, index, self) => (
       <VideoCard
         key={`video-card-${index}`}
-        src={file.src}
-        fileName={file.fileName}
-        duration={file.duration}
+        no={index}
+        files={self}
+        file={file}
       />
     ))
   }, [files])
