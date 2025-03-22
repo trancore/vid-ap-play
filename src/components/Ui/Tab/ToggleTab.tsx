@@ -25,7 +25,7 @@ export default function ToggleTab({
             tabs.map((tab) => (
               <Tab
                 key={`tab-${tab.id}`}
-                className={`${tab.active && 'text-orange-700'} "w-60 " cursor-pointer overflow-hidden border border-gray-500 p-4 text-ellipsis`}
+                className={`${tab.active && 'text-orange-700'} w-60 cursor-pointer overflow-hidden border border-gray-500 p-4 text-ellipsis`}
                 onClick={() => onClick.tab(tab.id)}
               >
                 {getLastTextSegment(tab.path, '/')}
