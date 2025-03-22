@@ -25,7 +25,7 @@ export default function VideoDialog({
   }
 
   return (
-    <Dialog className="absolute inset-0" as="div" open={isOpen} onClose={close}>
+    <Dialog className="fixed inset-0" as="div" open={isOpen} onClose={close}>
       <DialogPanel
         transition
         className="flex h-full w-full flex-col justify-center bg-white/5 p-6 backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"

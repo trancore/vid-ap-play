@@ -19,7 +19,7 @@ export default function ToggleTab({
 }: Props): JSX.Element {
   return (
     <TabGroup>
-      <TabList className="sticky top-[116px] flex overflow-x-scroll pb-10">
+      <TabList className="top-[116px] flex overflow-x-scroll pb-10">
         {tabs === undefined ||
           (tabs.length > 0 &&
             tabs.map((tab) => (
