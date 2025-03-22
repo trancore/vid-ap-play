@@ -1,7 +1,8 @@
 ﻿import { convertFileSrc } from '@tauri-apps/api/core'
 import { readDir } from '@tauri-apps/plugin-fs'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import Button from '~/components/Common/Button/Button'
+import Spinner from '~/components/Common/Loading/Spinner'
 import VideoCard from '~/components/Ui/Card/VideoCard'
 import { ITab } from '~/types/Tab'
 import { IFile } from '~/types/file'
@@ -19,9 +20,13 @@ export default function ContentTab({
 }: Props): JSX.Element {
   const [files, setFiles] = useState<IFile[]>([])
   const [currentTab, setCurrentTab] = useState<ITab>()
+  const [pending, setPending] = useState(false)
 
-  const fetchVideoFiles = useCallback(async () => {
+  const fetchVideoFiles = async () => {
     if (!currentTab?.path || !currentTab?.active) return
+
+    setFiles([])
+    setPending(true)
 
     const readFiles = await readDir(currentTab.path)
     const currentFiles = readFiles
@@ -45,7 +50,8 @@ export default function ContentTab({
 
     const resolvedFiles = await Promise.all(currentFiles)
     setFiles(resolvedFiles)
-  }, [currentTab, setFiles])
+    setPending(false)
+  }
 
   const videoCards = useMemo(() => {
     return files.map((file, index, self) => (
@@ -82,6 +88,7 @@ export default function ContentTab({
           ></Button>
         )}
       </div>
+      <Spinner isShow={pending} />
       {files.length > 0 && (
         <div className="flex flex-wrap gap-x-3 gap-y-10">{videoCards}</div>
       )}
