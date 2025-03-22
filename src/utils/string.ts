@@ -4,7 +4,7 @@
  * @param segment 探査する文字
  * @returns 後ろからsegmentまで切り取った文字列
  */
-export function getLastTextSegment(text: string, segment: '/'): string {
-  const lastSlashIndex = text.lastIndexOf(segment) // 最後の `/` の位置を取得
-  return lastSlashIndex !== -1 ? text.slice(lastSlashIndex + 1) : text // `/` の次から最後までを取得
+export function getLastTextSegment(text: string, segment: '/' | '¥'): string {
+  const lastSlashIndex = text.lastIndexOf(segment)
+  return lastSlashIndex !== -1 ? text.slice(lastSlashIndex + 1) : text
 }
