@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "tauri": "tauri",
     "format": "prettier --write .",
-    "lint": "eslint . --ext .ts,.tsx"
+    "lint": "eslint . --ext .ts,.tsx",
+    "bundle:nsis": "tauri build -- --runner cargo-xwin --target x86_64-pc-windows-msvc"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",
