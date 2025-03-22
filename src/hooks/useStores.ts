@@ -8,13 +8,6 @@ interface IStore {
 }
 
 const stores = await load('stores.json', { autoSave: true })
-// FIXME: 開発用ダミーデータ。削除すること
-await stores.set('files', [
-  {
-    id: '1111111111',
-    path: '$',
-  },
-])
 
 export default function useStores() {
   async function getStores(key: keyof IStore) {

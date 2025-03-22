@@ -1,19 +1,17 @@
 ﻿import { Button } from '@headlessui/react'
 import { useState } from 'react'
+import VideoDialog from '~/components/Ui/Dialog/VideoDialog'
+import { IFile } from '~/types/file'
 import { formatDuration } from '~/utils/format'
-import VideoDialog from '../Dialog/VideoDialog'
 
 interface Props {
-  src: string
-  fileName: string
-  duration: number
+  no: number
+  files: IFile[]
+  file: IFile
 }
 
-export default function VideoCard({
-  src,
-  fileName,
-  duration,
-}: Props): JSX.Element {
+export default function VideoCard({ no, files, file }: Props): JSX.Element {
+  const { src, fileName, duration } = file
   const [isOpen, setIsOpen] = useState(false)
 
   function open() {
@@ -27,14 +25,20 @@ export default function VideoCard({
           className="flex w-full flex-col items-start gap-1 hover:cursor-pointer"
           onClick={open}
         >
-          <video src={src} />
+          <video src={src} className="h-48" />
           <p className="w-full overflow-hidden text-left text-ellipsis">
             {fileName}
           </p>
           <p>{formatDuration(duration)}</p>
         </Button>
       </div>
-      <VideoDialog src={src} isOpen={isOpen} setIsOpen={setIsOpen} />
+      <VideoDialog
+        no={no}
+        src={src}
+        isOpen={isOpen}
+        files={files}
+        setIsOpen={setIsOpen}
+      />
     </>
   )
 }
