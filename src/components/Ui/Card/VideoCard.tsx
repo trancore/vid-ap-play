@@ -25,7 +25,7 @@ export default function VideoCard({ no, files, file }: Props): JSX.Element {
           className="flex w-full flex-col items-start gap-1 hover:cursor-pointer"
           onClick={open}
         >
-          <video src={src} />
+          <video src={src} className="h-48" />
           <p className="w-full overflow-hidden text-left text-ellipsis">
             {fileName}
           </p>
