@@ -3,7 +3,7 @@ name = "vid-ap-play"
 version = "1.1.0"
 description = "A Video App"
 authors = ["trancore"]
-edition = "2025"
+edition = "2024"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
