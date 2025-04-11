@@ -1,4 +1,5 @@
 ﻿import { convertFileSrc } from '@tauri-apps/api/core'
+import { invoke } from '@tauri-apps/api/core'
 import { readDir } from '@tauri-apps/plugin-fs'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import Button from '~/components/Common/Button/Button'
@@ -32,17 +33,14 @@ export default function ContentTab({
     const currentFiles = readFiles
       .filter((file) => VIDEO_EXTENSIONS.some((ext) => file.name.endsWith(ext)))
       .map<Promise<IFile>>(async (file) => {
-        const src = convertFileSrc(currentTab.path + '/' + file.name)
-        const videoElement = document.createElement('video')
-        videoElement.src = src
-        const duration = await new Promise<number>((resolve) => {
-          videoElement.addEventListener('loadedmetadata', () => {
-            resolve(videoElement.duration)
-          })
+        const srcPath = currentTab.path + '/' + file.name
+
+        const duration = await invoke<number>('get_duration', {
+          path: srcPath,
         })
 
         return {
-          src: src,
+          src: convertFileSrc(srcPath),
           fileName: file.name,
           duration: duration,
         }

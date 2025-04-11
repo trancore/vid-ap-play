@@ -26,6 +26,16 @@
 | `lint`    | コードリント                           |
 | `bundle`  | デスクトップアプリケーションのバンドル |
 
+### ⚠️アプリケーションのバンドルについて
+
+このアプリケーションはWindowsの実行ファイルを想定しています。  
+そのためmacでバンドルする場合は、[こちらの公式ドキュメント](https://v2.tauri.app/ja/distribute/windows-installer/#experimental-build-windows-apps-on-linux-and-macos)を参考に必要なライブラリをインストールしてからバンドルしてください（また、まだexperimentalである（執筆当時）ことに注意してください）。  
+また、npm scriptを実行してもバンドルできない場合は、以下のコマンドを実行してみてください。
+
+```zsh
+npm run tauri build -- --runner cargo-xwin --target x86_64-pc-windows-msvc
+```
+
 ## 📚 ライブラリ・フレームワークのインストール
 
 ```zsh

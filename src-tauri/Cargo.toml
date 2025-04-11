@@ -1,9 +1,9 @@
 [package]
 name = "vid-ap-play"
-version = "0.1.0"
-description = "A Tauri App"
-authors = ["you"]
-edition = "2021"
+version = "1.1.0"
+description = "A Video App"
+authors = ["trancore"]
+edition = "2024"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -25,4 +25,6 @@ serde_json = "1"
 tauri-plugin-store = "2"
 tauri-plugin-dialog = "2.0.0"
 tauri-plugin-fs = "2"
+urlencoding = "2.1"
+mp4parse = "0.17.0"
 
